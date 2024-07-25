@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../Pipes/truncate.pipe';
 @Component({
   selector: 'app-questions-list',
   standalone: true,
-  imports: [CommonModule,RouterLink,TruncatePipe],
+  imports: [CommonModule, RouterLink, TruncatePipe],
   templateUrl: './questions-list.component.html',
   styleUrl: './questions-list.component.css'
 })
@@ -19,17 +19,17 @@ export class QuestionsListComponent {
   constructor(private stackOverflowService: StackOverflowService) { }
 
   ngOnInit(): void {
-    this.loadQuestions();
+    this.getAllQuestions();
   }
 
-  loadQuestions(): void {
+  getAllQuestions(): void {
     this.isLoading = true;
     this.stackOverflowService.getLatestQuestions().subscribe(
       {
-        next:(response) => {
+        next: (response) => {
           this.questions = response.items;
           this.isLoading = false;
-        },error:( error) => {
+        }, error: (error) => {
           console.error('Error fetching questions:', error);
           this.isLoading = false;
         }

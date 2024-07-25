@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StackOverflowService } from '../../services/stack-overflow.service';
 
 import { CommonModule } from '@angular/common';
@@ -8,12 +8,12 @@ import { IQuestionDetailView } from '../../models/ModelView/IQuestionDetailView'
 @Component({
   selector: 'app-question-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './question-detail.component.html',
   styleUrl: './question-detail.component.css'
 })
 export class QuestionDetailComponent {
-  question!:IQuestionDetailView  ;
+  question!: IQuestionDetailView;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,18 +26,22 @@ export class QuestionDetailComponent {
     this.route.params.subscribe(params => {
       const questionId = +params['id'];
       if (questionId) {
-              this.loadQuestionDetails(questionId);
-            }
+        this.getQuestionDetails(questionId);
+      }
     });
 
-    
+
   }
-  loadQuestionDetails(questionId: number): void {
-    this.stackOverflowService.getQuestionDetails(questionId).subscribe(response => {
-      this.question = response.items[0];
-      
-    }, error => {
-      console.error('Error fetching question details:', error);
-    });
+  getQuestionDetails(questionId: number): void {
+    this.stackOverflowService.getQuestionDetails(questionId).subscribe(
+      {
+        next: (response) => {
+          this.question = response.items[0];
+        },
+        error: (error) => {
+          console.error('Error fetching question details:', error);
+        }
+      }
+    );
   }
 }

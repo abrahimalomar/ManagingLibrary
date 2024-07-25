@@ -1,48 +1,40 @@
-
-        
-            <div class="container mt-5">
-              <div class="row justify-content-center">
-                <div class="col-md-8">
-                  <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                      <h3 class="card-title mb-0 text-center">List of main and sub-categories</h3>
-                    </div>
-                    <div class="card-body">
-                      <form [formGroup]="BookAddForm" (ngSubmit)="Add()">
-                        <div class="mb-3">
-                          <label for="mainCategory" class="form-label">Main Category</label>
-                          <select class="form-select" id="mainCategory" formControlName="mainCategory" (change)="onSelectCategory()">
-                            <option value="" disabled selected>Select Main Category</option>
-                            @for (category of mainCategories; track $index)
-                                {
-                                <option [value]="category.mainCategoryId">{{ category.name }}</option>
-                                }
-                          </select>
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="subCategory" class="form-label">Sub Category</label>
-                          <select class="form-select" id="subCategory" formControlName="subCategory">
-                            <option value="" disabled selected>Select Sub Category</option>
-                            @if (subCategories.length > 0) {
-                              @for (category of subCategories;track $index) {
-                                <option [value]="category.name">{{ category.name }}</option>
-                              }
-                            } @else {
-                              <option class="text-danger" disabled>No sub categories available</option>
-                            }
-                          </select>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0 text-center">List of main and sub-categories</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="BookAddForm" (ngSubmit)="Add()">
+            <div class="mb-3">
+              <label for="mainCategory" class="form-label">Main Category</label>
+              <select class="form-select" id="mainCategory" formControlName="mainCategory"
+                (change)="onSelectCategory()">
+                <option value="" disabled selected>Select Main Category</option>
+                @for (category of mainCategories; track $index)
+                {
+                <option [value]="category.mainCategoryId">{{ category.name }}</option>
+                }
+              </select>
             </div>
-         
 
-
-
-          
-            
-            
+            <div class="mb-3">
+              <label for="subCategory" class="form-label">Sub Category</label>
+              <select class="form-select" id="subCategory" formControlName="subCategory">
+                <option value="" disabled selected>Select Sub Category</option>
+                @if (subCategories.length > 0) {
+                @for (category of subCategories;track $index) {
+                <option [value]="category.name">{{ category.name }}</option>
+                }
+                } @else {
+                <option class="text-danger" disabled>No sub categories available</option>
+                }
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
