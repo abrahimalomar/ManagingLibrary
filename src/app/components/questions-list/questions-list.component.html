@@ -1,0 +1,36 @@
+
+@if(isLoading){
+    <div class="loading-indicator">
+        <p>Loading...</p>
+      </div>
+    
+}
+@if (!isLoading) {
+    @if(questions){
+    <div class="container mt-4">
+        <div class="scroll-container">
+            <div class="row">
+                @for (question of questions; track $index) {
+                <div class="col-md-4 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a [routerLink]="['/questionDetails', question.question_id]">
+                                    {{ question.title | truncate }}
+                                </a>
+                            </h5>
+                            <p class="card-text">Score: {{ question.score }}</p>
+                            <p class="card-text">Created: {{ question.creation_date | date:'short' }}</p>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+}@else {
+    <div class="alert alert-warning text-center" role="alert">
+        <strong>No questions found!</strong>
+    </div>
+} 
+} 

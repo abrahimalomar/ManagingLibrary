@@ -1,0 +1,20 @@
+<div class="container mt-2">
+  @if (question) {
+  <div class="card">
+      <div class="card-header">
+          <h2>{{ question.title }}</h2>
+      </div>
+      <div class="card-body scrollable">
+          <p><strong>Posted by:</strong> <a [href]="question.owner.link" target="_blank">{{ question.owner.display_name }}</a></p>
+          <p><strong>Reputation:</strong> {{ question.owner.reputation }}</p>
+          <p><strong>Creation Date:</strong> {{ question.creation_date | date:'short' }}</p>
+          <p><strong>Last Activity Date:</strong> {{ question.last_activity_date | date:'short' }}</p>
+          <p><strong>View Count:</strong> {{ question.view_count }}</p>
+          <p><strong>Answer Count:</strong> {{ question.answer_count }}</p>
+          <p><strong>Score:</strong> {{ question.score }}</p>
+          <p><strong>Link:</strong> <a [href]="question.link" target="_blank">View Question on StackOverflow</a></p>
+          <div [innerHTML]="question.body"></div>
+      </div>
+  </div>
+  }
+</div>
