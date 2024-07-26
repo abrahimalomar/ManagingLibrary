@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { StackOverflowService } from '../../services/stack-overflow.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IQuestionDetailView } from '../../models/ModelView/IQuestionDetailView';
 import { TruncatePipe } from '../../Pipes/truncate.pipe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-questions-list',
@@ -12,11 +13,14 @@ import { TruncatePipe } from '../../Pipes/truncate.pipe';
   templateUrl: './questions-list.component.html',
   styleUrl: './questions-list.component.css'
 })
-export class QuestionsListComponent {
+export class QuestionsListComponent implements OnDestroy {
   questions: IQuestionDetailView[] = [];
   isLoading: boolean = false;
+  subscription!: Subscription;
+
 
   constructor(private stackOverflowService: StackOverflowService) { }
+ 
 
   ngOnInit(): void {
     this.getAllQuestions();
@@ -24,7 +28,7 @@ export class QuestionsListComponent {
 
   getAllQuestions(): void {
     this.isLoading = true;
-    this.stackOverflowService.getLatestQuestions().subscribe(
+  this.subscription=  this.stackOverflowService.getLatestQuestions().subscribe(
       {
         next: (response) => {
           this.questions = response.items;
@@ -35,5 +39,10 @@ export class QuestionsListComponent {
         }
       }
     );
+  }
+  ngOnDestroy(): void {
+
+      this.subscription.unsubscribe();
+    
   }
 }

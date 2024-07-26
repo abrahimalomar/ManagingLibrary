@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StackOverflowService } from '../../services/stack-overflow.service';
 
 import { CommonModule } from '@angular/common';
 import { IQuestionDetailView } from '../../models/ModelView/IQuestionDetailView';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-question-detail',
@@ -12,13 +13,17 @@ import { IQuestionDetailView } from '../../models/ModelView/IQuestionDetailView'
   templateUrl: './question-detail.component.html',
   styleUrl: './question-detail.component.css'
 })
-export class QuestionDetailComponent {
+export class QuestionDetailComponent implements OnDestroy {
+
+
+  subscription!: Subscription;
   question!: IQuestionDetailView;
 
   constructor(
     private route: ActivatedRoute,
     private stackOverflowService: StackOverflowService
   ) { }
+
 
 
   ngOnInit(): void {
@@ -33,7 +38,7 @@ export class QuestionDetailComponent {
 
   }
   getQuestionDetails(questionId: number): void {
-    this.stackOverflowService.getQuestionDetails(questionId).subscribe(
+   this.subscription= this.stackOverflowService.getQuestionDetails(questionId).subscribe(
       {
         next: (response) => {
           this.question = response.items[0];
@@ -43,5 +48,10 @@ export class QuestionDetailComponent {
         }
       }
     );
+  }
+  ngOnDestroy(): void {
+
+      this.subscription.unsubscribe();
+    
   }
 }
