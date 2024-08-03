@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.staging';
+
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { IMainCategory } from '../models/ModelView/IMainCategory';
 import { ISubCategory } from '../models/ModelView/ISubCategory';
 import { HandleErrorService } from './handle-error.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  private apiUrl=environment.apiUrl;
+  private apiUrl=environment.url;
   constructor(private http:HttpClient,
               private handleErrorService:HandleErrorService) { }
 
